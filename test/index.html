@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test Web-Localize</title>
+        <script src="../src/localize.js" type="text/javascript"></script>
+        <script>
+            var secStart = (new Date()).getTime();
+        </script>
+
+        <link id="wl_test1_css" href="test1_a735472.css" rel="@placeholder"/>
+        <script>WL.localize('wl_test1_css');</script>
+
+        <link id="wl_test2_css" href="test2.css?1345678" rel="@placeholder"/>
+        <script>WL.localize('wl_test2_css');</script>
+
+        <link id="wl_test3_css" href="test3_335b765.css" rel="@placeholder"/>
+        <script>WL.localize('wl_test3_css');</script>
+
+        <!--link id="wl_webappandroid_aio_css" href="http://wap.baidu.com/static/news/webapp/webappandroid/css/webappandroid-aio_9df2be0.css" rel="@placeholder"/>
+        <script>WL.localize('wl_webappandroid_aio_css');</script-->
+
+    </head>
+    <body>
+        <h1>这里是红色表明本地化成功</h1>
+        <h2></h2>
+    </body>
+    <script>
+            var secEnd = (new Date()).getTime();
+            document.getElementsByTagName('H2')[0].innerHTML
+                = '耗时: '
+                    + ( secEnd - secStart ) / 1000 
+                    + ' s'; 
+    </script>
+</html>
+
