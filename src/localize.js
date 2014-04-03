@@ -3,9 +3,11 @@ window.WL = (function(){
 var confPrefix = 'WL';
 var confAppName = '';
 
+__inline("./resourceinfo.js");
+
 function localize(id){
     var url = getURL(id),
-        info = getResourceInfo(url);
+        info = resourceInfo_getResourceInfo(url);
 
     if(exists(info)){
         process(info, id); 
@@ -23,71 +25,10 @@ function getURL(id){
     return url;
 }
 
-function getResourceInfo(url){
-    var info = {
-            fullPath: url
-            , path: ''
-            , version: ''
-            , dir: ''
-            , fileName: ''
-            , type: ''
-            , name: ''
-            , md5: ''
-        },
-        rPath = /^[^\?]+/,
-        rVersion = /^[^\?]+\?([^\?]+)/,
-        rFileName = /^(.+\/)([^\/]+)$/,
-        rType = /^(.+)\.([^\.]+)$/,
-        rMd5 = /^(.+)_([^_]{7})$/,
-        remain = url,
-        match = null;
 
-    if(match = url.match(rPath)){
-        info.path = match[0];
-    }
-
-    if(match = url.match(rVersion)){
-        info.version = match[0];
-    }
-
-    info.dir = info.path;
-    if(match = info.path.match(rFileName)){
-        info.dir = match[1];
-        info.fileName = match[2]; 
-    }
-
-    remain = info.fileName;
-    if(match = info.fileName.match(rType)){
-        info.type = match[2]; 
-        remain = match[1];
-    }
-
-    info.name = remain;
-    if(match = remain.match(rMd5)){
-        info.md5 = match[2]; 
-        info.name = match[1];
-    }
-
-    return info;
-}
-
-function getResourceKey(info){
-    var key = '';
-
-    key = [
-        confPrefix + '_'
-        , confAppName + '_'
-        , info.dir
-        , info.name
-        , '.' + info.type
-    ].join('');
-
-    console.log(key);
-    return key;
-}
 
 function exists(info){
-    var key = getResourceKey(info),
+    var key = resourceInfo_getResourceKey(info),
         str, data;
 
     if(str = localStorage.getItem(key)){
@@ -101,7 +42,7 @@ function exists(info){
 }
 
 function process(info, id){
-    var key = getResourceKey(info),
+    var key = resourceInfo_getResourceKey(info),
         data = JSON.parse(
             localStorage.getItem(key)
         ),
@@ -138,7 +79,7 @@ function requireSync(info, id){
 
 function saveToLocal(info){
     var url = info.fullPath,
-        key = getResourceKey(info),
+        key = resourceInfo_getResourceKey(info),
         sheets = document.styleSheets,
         len = sheets.length,
         sheet = null;
