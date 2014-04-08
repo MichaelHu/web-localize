@@ -1,13 +1,13 @@
-function saveToLocal(info){
+function saveToLocal(info, data){
     var type = info.type.toLowerCase();
 
     switch(type){
         case 'css':
-            saveToLocal_css(info);
+            saveToLocal_css(info, data);
             break;
 
         case 'js':
-            saveToLocal_js(info);
+            saveToLocal_js(info, data);
             break;
     }
 }
@@ -54,6 +54,16 @@ function saveToLocal_css(info){
             }, 500);
         }
     }
+}
+
+function saveToLocal_js(info, data){
+    var key = resourceInfo_getResourceKey(info),
+        jsText = data;
+
+    localStorage.setItem(key, JSON.stringify({
+        md5: info.md5
+        , content: jsText
+    }));
 }
 
 

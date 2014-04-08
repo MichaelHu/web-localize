@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Test Web-Localize</title>
-        <script src="../src/localize.js" type="text/javascript"></script>
+        <script src="../src/localize.js?__inline" type="text/javascript"></script>
         <script>
             var secStart = (new Date()).getTime();
         </script>
@@ -16,20 +17,28 @@
         <link id="wl_test3_css" href="test3_335b765.css" rel="@placeholder"/>
         <script>WL.localize('wl_test3_css');</script>
 
-        <!--link id="wl_webappandroid_aio_css" href="http://wap.baidu.com/static/news/webapp/webappandroid/css/webappandroid-aio_9df2be0.css" rel="@placeholder"/>
-        <script>WL.localize('wl_webappandroid_aio_css');</script-->
+        <link id="wl_test1_js" href="test1_789bae3.js" rel="@placeholder"/>
+        <link id="wl_common_lib_js" href="common_lib-aio_57075cf.js" rel="@placeholder"/>
+        <link id="wl_common_rocket_js" href="common_rocket-aio_9349694.js" rel="@placeholder"/>
+        <link id="wl_gmu_js" href="gmu-aio_23144bf.js" rel="@placeholder"/>
+        <link id="wl_webappandroid_js" href="webappandroid-aio_1a932f1.js" rel="@placeholder"/>
 
+        <link id="wl_test_finishload_js" href="test_finishload.js" rel="@placeholder"/>
     </head>
     <body>
-        <h1>这里是红色表明本地化成功</h1>
+        <h1>这里是红色表明本地化CSS成功</h1>
         <h2></h2>
     </body>
+
     <script>
-            var secEnd = (new Date()).getTime();
-            document.getElementsByTagName('H2')[0].innerHTML
-                = '耗时: '
-                    + ( secEnd - secStart ) / 1000 
-                    + ' s'; 
+        WL.localize('wl_test1_js');
+        WL.localize('wl_common_lib_js');
+        WL.localize('wl_common_rocket_js');
+        WL.localize('wl_gmu_js');
+        WL.localize('wl_webappandroid_js');
+
+        WL.localize('wl_test_finishload_js');
     </script>
+
 </html>
 

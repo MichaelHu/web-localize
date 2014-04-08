@@ -8,7 +8,8 @@ function process(info, id){
             break;
 
         case 'js':
-            process_css(info, id);
+            globalExecuteOrder.push(id);
+            process_js(info, id);
             break;
     }
 
@@ -30,8 +31,38 @@ function process_css(info, id){
         , id
         , '">'
         , cssText.join('\n') 
-        , '</style>'
+        , '<' + '/style>'
     ].join(''));
+}
+
+function process_js(info, id, content){
+    var key = resourceInfo_getResourceKey(info),
+        data,
+        jsText;
+
+    if(content){
+        jsText = content;
+    }
+    else{
+        data = JSON.parse(
+            localStorage.getItem(key)
+        );
+        jsText = data.content;
+    }
+
+    if(globalExecuteOrder.indexOf(id) == 0){
+        globalExecuteOrder.splice(0, 1);
+        try{
+            (1, eval)(jsText);
+        }
+        catch(e){}
+    }
+    else{
+        setTimeout(function(){
+            console.log('wait to execute ' + id);
+            process_js(info, id, content);
+        }, 10);
+    }
 }
 
 

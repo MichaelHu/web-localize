@@ -2,6 +2,7 @@ window.WL = (function(){
 
 var confPrefix = 'WL';
 var confAppName = '';
+var globalExecuteOrder = [];
 
 __inline("./util.js");
 __inline("./resourceinfo.js");
@@ -14,16 +15,18 @@ function localize(id){
         info = resourceInfo_getResourceInfo(url);
 
     if(exists(info)){
+        console.log('exists ' + info.fullPath);
         process(info, id); 
     }
     else{
+        console.log('not exists ' + info.fullPath);
         requireSync(info, id);
     }
 }
 
 function getURL(id){
     var el = document.getElementById(id),
-        url = el.href;
+        url = el.href || el.src;
     
     el.parentNode.removeChild(el);
     return url;
